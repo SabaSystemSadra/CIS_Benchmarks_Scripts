@@ -1,5 +1,5 @@
 # Configuration Definition
-Configuration CIS_WindowsServer2019_v110 {
+Configuration CIS_WindowsServer2019_v110_HardenConfig {
    param (
        [string[]]$NodeName ='localhost'
        )
@@ -380,7 +380,7 @@ Configuration CIS_WindowsServer2019_v110 {
          # 2.3.7.3 (L1) Ensure 'Interactive logon: Machine inactivity limit' is set to '900 or fewer second(s), but not 0'
          Interactive_logon_Machine_inactivity_limit = '900' 
          # 2.3.7.4 (L1) Configure 'Interactive logon: Message text for users attempting to log on' 
-         Interactive_logon_Message_text_for_users_attempting_to_log_on = 'This computer system is the property of Acme Corporation and is for authorised use by employees and designated contractors only. By continuing to use this system you indicate your awareness of and consent to these terms and conditions of use.It is the users responsibility to LOG OFF IMMEDIATELY if you do not agree to the conditions stated in this notice.'
+         Interactive_logon_Message_text_for_users_attempting_to_log_on = '*** Custom Warning Message Here ***'
          # 2.3.7.5 (L1) Configure 'Interactive logon: Message title for users attempting to log on'
          #Interactive_logon_Message_title_for_users_attempting_to_log_on = '<Logon Warning>'
          Interactive_logon_Message_title_for_users_attempting_to_log_on = 'Logon Warning'
@@ -490,6 +490,9 @@ Configuration CIS_WindowsServer2019_v110 {
          User_Account_Control_Virtualize_file_and_registry_write_failures_to_per_user_locations = 'Enabled'
 
        }
+
+    # Careful of applying firewall checklists
+    # If connecting via RDP or SSH, it might have impacts on connection 
 
     #    #  9.1.1 (L1) Ensure 'Windows Firewall: Domain: Firewall state' is set to 'On (recommended)'
     #    Registry 'EnableFirewallDomain' {
@@ -1369,6 +1372,8 @@ Configuration CIS_WindowsServer2019_v110 {
           ValueType    = 'String'
           ValueData    = '5'
        }
+
+      # applying this two might lead to connection loss from RDP connection
 
       #  #  18.4.10 (L2) Ensure 'MSS: (TcpMaxDataRetransmissions IPv6) How many times unacknowledged data is retransmitted' is set to 'Enabled: 3'
       #  Registry 'TcpMaxDataRetransmissions' {
@@ -3122,4 +3127,4 @@ Configuration CIS_WindowsServer2019_v110 {
    }
 }
 
-CIS_WindowsServer2019_v110
+CIS_WindowsServer2019_v110_HardenConfig
